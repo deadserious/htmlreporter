@@ -1,0 +1,68 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <title>Sample Worksheet</title>
+  </head>
+
+  <!-- NOTE: Try setting EmployeeID=8, 11 or 29 in the Global Replacers before Preview--> 
+
+  <body style="margin:0px 0px 0px 0px;">
+     <data src="    select current_timestamp RunTime, e.EmployeeID, d.DeptName, e.FirstName, e.MiddleInit, 
+                           e.LastName, e.PhoneNumber, e.EmailAddress, e.EmployeeID_Super  
+                      from Employee e
+                      join Department d
+                        on e.DepartmentID = d.DepartmentID  
+                     where e.EmployeeID={%EmployeeID%}" id="t">
+     <format id="t" field="RunTime" format="mm/dd/yyyy"/>
+      <table cellspacing="0" cellpadding="0" align="center" border="0" style="width: 7.5in; font: 9pt 'arial';padding:1px;padding-left:10px;padding-right:10px;">
+        <tr height="1px" style="font: 12pt 'arial';padding-bottom:4px;">
+          <td valign=top colspan=2 align=left style="padding-right:2px;width: 5in;"><b>ID# {%EmployeeID%}</b></td>
+          <td valign=top colspan=2 align=right style="padding-left:2px;width: 5in;"><b>Employee Worksheet</b></td>
+        </tr>
+        <tr height="1px" style="padding-top: 4px;">
+          <td valign=top align=left style="padding-right:2px;BORDER-top: black 2px solid;width:0.75in;"><b>Printed:</B></td>
+          <td valign=top style="padding-left:2px;BORDER-top: black 2px solid;width:3.0in;">{t.RunTime}</td>
+          <td valign=top align=left style="padding-right:2px;BORDER-top: black 2px solid;width:0.75in;"><b>Department:</B></td>
+          <td valign=top style="padding-left:2px;BORDER-top: black 2px solid;width:3.0in;">{t.DeptName}</td>
+        </tr>
+        <tr height="1px">
+          <td valign=top align=left style="padding-right:2px;"><B>Name:</B></td>
+          <td valign=top style="padding-left:2px;">{t.LastName}, {t.FirstName} {t.MiddleInit}</td>
+          <td valign=top align=left style="padding-right:2px;"><b>Phone:</B></td>
+          <td valign=top style="padding-left:2px;">{t.PhoneNumber}</td>
+        </tr>
+        <tr height="1px">
+          <td valign=top align=left style="padding-right:2px;"><b>&nbsp;</B></td>
+          <td valign=top style="padding-left:2px;">&nbsp;</td>
+          <td valign=top align=left style="padding-right:2px;"><b>Email:</B></td>
+          <td valign=top style="padding-left:2px;">{t.EmailAddress}</td>
+        </tr>
+        <tr height="1px" style="padding-top: 2px;padding-bottom: 2px;">
+          <td valign=top colspan="4" align=left style="padding-right:2px;BORDER-top: black 1px solid;"><b>Supervises:</B></td>
+        </tr>
+        <tr height="1px">
+          <td valign=top colspan=4 style="BORDER-top: black 1px solid;BORDER-bottom: black 1px solid;width:7.5in;padding-top:8px;padding-bottom:8px;"><b>Supervised Employees:</b></td>
+        </tr>
+        <tr height="1px">
+          <TD valign=top colspan=4 style="padding-top:0px;padding-left:10px;padding-right:10px;">
+            <table width="100%" style="font: 9pt 'arial';">
+              <data src="    select e.EmployeeID, e.FirstName, e.MiddleInit, e.LastName, e.PhoneNumber
+                               from Employee e
+                              where e.EmployeeID_Super = {t.EmployeeID}
+                           order by e.LastName, e.FirstName, e.MiddleInit" id="p">
+                <tr>
+                  <td valign=top style="width:0.25in;padding-bottom:8px;">&nbsp;</td>
+                  <td valign=top style="width:0.75in;padding-bottom:8px;">ID# {p.EmployeeID}</td>
+                  <td valign=top style="width:5in;padding-bottom:8px;">{p.LastName}, {p.FirstName} {p.MiddleInit}</td>
+                </TR>
+              </data>
+            </TABLE>
+          </TD>
+        </tr>
+        <tr height="*">
+          <td valign=top colspan=4>&nbsp;</TD>
+        </TR>
+      </table>
+    </data>
+  </body>
+</html>

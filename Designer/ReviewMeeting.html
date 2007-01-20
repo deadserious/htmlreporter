@@ -1,0 +1,107 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <title>Project Review Meeting</title>
+  </head>
+
+  <style type="text/css">
+    .col1 { width:0.6in; padding-top:2px;font: 9pt 'arial'; }
+    .col2 { width:0.4in; padding-top:2px;font: 9pt 'arial'; }
+    .col3 { width:0.9in; padding-top:2px;font: 9pt 'arial'; }
+    .col4 { width:0.3in; padding-top:2px;font: 9pt 'arial'; }
+    .col5 { width:1.5in; padding-top:2px;font: 9pt 'arial'; }
+    .col6 { width:1.0in; padding-top:2px;font: 9pt 'arial'; }
+    .col7 { width:2.8in; padding-top:2px;font: 9pt 'arial'; }
+    .col2And3 { width:1.3in; padding-top:2px;font: 9pt 'arial'; }
+    .rowof6 {width:6.5in;padding-top:2px;font: 9pt 'arial';}
+    .rowof7 (width:7.5in;padding-top:2px;font: 9pt 'arial';}
+  </style>
+  <body style="margin:0px 0px 0px 0px;">
+  <span style="font: 12pt 'Arial' bold;"><center>Project Review Meeting</center></span>
+  <span style="font: 8pt 'Arial' bold;"><center>{%datetime%}</center></span><br>
+    <data src="  Select * from (
+                           select 'N' TaskStatusType, 'New Tasks' Description, 0 Sort
+                     union select 'H', 'Held Tasks', 1
+                     union select 'O', 'Open Tasks', 2
+                     union select 'P', 'Pending Tasks', 3
+                  ) t order by t.Sort " Id="type">
+      <table cellspacing="0" cellpadding="0" align="center" border="0" style="width: 7.5in; font: 9pt 'arial';padding:1px;padding-left:10px;padding-right:10px;">
+        <tr height="1px" style="font: 12pt 'arial';padding-bottom:4px;">
+          <td valign=top colspan=7 align=right style="width: 7.5in;BORDER-bottom: black 2px solid;"><b>{type.Description}</b></td>
+        </tr>
+        <data src="    select TaskID, DateEntered, DateLastChanged, 
+                              case DateNeeded when '12/31/3000' then '' else Convert(varchar(10),DateNeeded,101) end as DateNeeded, 
+                              PriorityName, 
+                              TaskTypeName, TaskStatusName, EnteredBy, AssignedTo, 
+                              RequestBy, ProjectName, ActivityName, InitiativeName,
+                              Subject, Description   
+                         from vw_TaskList
+                        where TaskStatusType='{type.TaskStatusType}'
+                          and ProjectID = {%ProjectID%}
+                     order by PrioritySort, TaskStatusName, DateNeeded desc, DateEntered, Subject
+                 " id="t">
+          <format id="t" field="DateEntered" format="mm/dd/yyyy"/>
+          <format id="t" field="DateLastChanged" format="mm/dd/yyyy"/>
+          <tr height="1px">
+            <td valign=top class="col1" style="font-size:10pt;"><b>{t.TaskID}</B></td>
+            <td valign=top class="col2And3" colspan=2>{t.TaskStatusName}</td>
+            <td valign=top class="col4"><b>Activity:</B></td>
+            <td valign=top class="col5">{t.Activityname}</td>
+            <td valign=top class="col6"><b>Entered:</B></td>
+            <td valign=top class="col7">{t.EnteredBy}</td>
+          </tr>
+          <tr height="1px">
+            <td valign=top class="col1">&nbsp;</td>
+            <td valign=top class="col2"><b>Priority:</b></td>
+            <td valign=top class="col3">{t.PriorityName}</td>
+            <td valign=top class="col4"><b>Entered:</b></td>
+            <td valign=top class="col5">{t.DateEntered}</td>
+            <td valign=top class="col6"><b>Requested:</B></td>
+            <td valign=top class="col7">{t.RequestBy}</td>
+          </tr>
+          <tr height="1px">
+            <td valign=top class="col1">&nbsp;</td>
+            <td valign=top class="col2"><b>Needed:</B></td>
+            <td valign=top class="col3">{t.DateNeeded}</td>
+            <td valign=top class="col4"><b>Type:</B></td>
+            <td valign=top class="col5">{t.TaskTypeName}</td>
+            <td valign=top class="col6"><b>Assigned To:</b></td>
+            <td valign=top class="col7">{t.AssignedTo}</td>
+          </tr>
+          <tr height="1px" style="padding-top: 8px;">
+            <td valign=top class="col1" style="padding-top: 8px;padding-bottom: 8px;"><b>Detail:</B></td>
+            <td valign=top class="rowof6" style="padding-top: 8px;padding-bottom: 8px;" colspan=6><u>{t.Subject}</u><br>{t.Description}</td>
+          </tr>
+          <tr height="1px" style="padding-top: 4px;">
+            <td valign=top class="col1">&nbsp;</td>
+            <td valign=top class="rowof6" colspan=6 >
+              <table class="rowof6" cellspacing="0" cellpadding="0" align="left" border="0">
+                <data src="    select DateEntered, EnteredBy, Hours, Description,
+                                      TaskStatusNameTo 
+                                 from vw_ProgressList
+                                where TaskID={t.TaskID}
+                             order by DateEntered desc 
+                         " id="p">
+                  <format id="p" field="DateEntered" format="mm/dd/yyyy"/>
+                  <tr height="1px">
+                    <td valign=top style="font: 9pt 'arial';width:0.75in;">{p.DateEntered}</td>
+                    <td valign=top style="font: 9pt 'arial';width:3.6in;">{p.EnteredBy}</td>
+                    <td valign=top style="font: 9pt 'arial';width:1.4in;">{p.TaskStatusNameTo}</td>
+                  </tr>
+                  <tr height="1px">
+                    <td valign=top style="font: 9pt 'arial';width:1.25in;">&nbsp;</td>
+                    <td valign=top colspan=2 style="font: 9pt 'arial';width:4.85in;padding-bottom: 8px;">{p.Description}</td>
+                  </tr>
+                </data>          
+              </table>              
+            </td>
+          </tr>
+          <tr height="4px">
+            <td valign=top align=left colspan=7 class="rowof7" style="BORDER-bottom: black 1px dotted;">&nbsp;</td>
+          </tr>
+        </data>
+      </table>
+      
+    </data>
+  </body>
+</html>
