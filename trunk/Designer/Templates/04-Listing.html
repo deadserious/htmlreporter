@@ -1,0 +1,38 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <title>Sample Listing</title>
+  </head>
+
+  <body style="margin:0px 0px 0px 0px;">
+    <data src="    select first 1 current_timestamp RunTime  
+                      from Employee e" id="t">
+    <format id="t" field="RunTime" format="mm/dd/yyyy"/>
+      <table cellspacing="0" cellpadding="0" align="center" border="0" style="width: 7.5in; font: 9pt 'arial';padding:1px;padding-left:10px;padding-right:10px;">
+        <tr height="1px" style="font: 12pt 'arial';padding-bottom:4px;">
+          <td valign=top colspan=2 align=left style="padding-right:2px;width: 5in;"><b>Printed {t.RunTime}</b></td>
+          <td valign=top colspan=2 align=right style="padding-left:2px;width: 5in;"><b>Employee Listing</b></td>
+        </tr>
+        <tr height="1px" style="padding-top: 4px;">
+          <td valign=top align=left style="padding-right:2px;BORDER-top: black 2px solid;BORDER-bottom: black 2px solid;width:1.75in;"><b>Department</B></td>
+          <td valign=top style="padding-left:2px;BORDER-top: black 2px solid;BORDER-bottom: black 2px solid;width:0.75in;"><b>ID</b></td>
+          <td valign=top align=left style="padding-right:2px;BORDER-top: black 2px solid;BORDER-bottom: black 2px solid;width:3in;"><b>Name</B></td>
+          <td valign=top style="padding-left:2px;BORDER-top: black 2px solid;BORDER-bottom: black 2px solid;width:2.0in;"><b>Email</b></td>
+        </tr>
+        <data src="    select e.EmployeeID, d.DeptName, e.FirstName, e.MiddleInit, 
+                              e.LastName, e.PhoneNumber, e.EmailAddress   
+                         from Employee e
+                         join Department d
+                           on e.DepartmentID = d.DepartmentID  
+                        order by d.DeptName, e.LastName, e.FirstName, e.MiddleInit" id="d">
+          <tr height="1px">
+            <td valign=top><b>{d.DeptName:Group}</b></td>
+            <td valign=top>{d.EmployeeID}</td>
+            <td valign=top>{d.LastName}, {d.FirstName} {d.MiddleInit}</td>
+            <td valign=top>{d.EmailAddress}</td>
+          </tr>
+        </data>
+      </table>
+    </data>
+  </body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+  <head>
+    <title>WebContent Search Results</title>
+  </head>
+
+  <datascript language="pascal" module="vars" src="
+    var i : integer;
+  "/>
+
+  <body>
+    <table style="width:100%" cellpadding=0 cellspacing=0>
+      <data src="  select c.WebContentID, c.Content
+                     from bod..WebContent c
+                     join bod..webContentLink l
+                       on c.WebContentId= l.ChildID
+                      and (not l.ParentID = -1)
+                    where dbo.fn_StripHTML(c.Content) like '%accounting%'" id="c">
+        <datascript language="pascal" module="dataloop" src="
+          uses SysUtils, DateUtils, vars;
+          inc(i);
+          Replace := '<tr><td>'+IntToStr(i)+':<hr style=''height:5px;color:red;''></td></tr>';
+        "/>
+        <tr>          
+          <td style="border-bottom: 1px solid;">{c.Content}</td>
+        </tr>
+      </data>
+    </table>
+  </body>
+</html>
+

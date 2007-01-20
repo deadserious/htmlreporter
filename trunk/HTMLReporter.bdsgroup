@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<PersonalityInfo>
+		<Option>
+			<Option Name="Personality">Default.Personality</Option>
+			<Option Name="ProjectType"></Option>
+			<Option Name="Version">1.0</Option>
+			<Option Name="GUID">{D4BE6651-A485-47AB-BCEA-B9ACA7FDDA9A}</Option>
+		</Option>
+	</PersonalityInfo>
+	<Default.Personality>  
+    
+    
+    
+    <Projects>
+      <Projects Name="Project1.exe">Test\Project1.bdsproj</Projects>
+      <Projects Name="HTMLReporter.bpl">HTMLReporter.bdsproj</Projects>
+      <Projects Name="HTMLReporterPaxScript.bpl">HTMLReporterPaxScript.bdsproj</Projects>
+      <Projects Name="Designer.exe">Designer\Designer.bdsproj</Projects>
+      <Projects Name="Targets">Project1.exe HTMLReporter.bpl HTMLReporterPaxScript.bpl Designer.exe</Projects>
+    </Projects>
+    <Dependencies/>
+  </Default.Personality>  <StarTeamAssociation></StarTeamAssociation>
+  <StarTeamNonRelativeFiles></StarTeamNonRelativeFiles>
+</BorlandProject>
