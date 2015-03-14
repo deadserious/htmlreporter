@@ -1,0 +1,1 @@
+This Delphi component provides an engine for processing html templates with replaceable and repeatable sections suitable for generating reports.
